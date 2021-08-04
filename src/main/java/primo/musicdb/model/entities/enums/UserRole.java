@@ -1,5 +1,5 @@
 package primo.musicdb.model.entities.enums;
 
-public enum UserRoles {
+public enum UserRole {
     ADMIN, USER
 }
