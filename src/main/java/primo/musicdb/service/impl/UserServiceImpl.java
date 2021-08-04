@@ -65,13 +65,12 @@ public class UserServiceImpl implements UserService {
     @Override
     public void registerAndLoginUser(UserRegistrationServiceModel serviceModel) {
         UserEntity userEntity = modelMapper.map(serviceModel, UserEntity.class);
+        userEntity.setPassword(passwordEncoder.encode(userEntity.getPassword()));
 
         UserRoleEntity userRoleEntity =
                 userRoleService
                         .findByRole(UserRole.USER);
-
         userEntity.addRole(userRoleEntity);
-        userEntity.setPassword(passwordEncoder.encode(userEntity.getPassword()));
 
         userRepository.saveAndFlush(userEntity);
 
@@ -81,8 +80,7 @@ public class UserServiceImpl implements UserService {
         Authentication authentication =
                 new UsernamePasswordAuthenticationToken(
                         userDetails, userEntity.getPassword(),
-                        userDetails.getAuthorities()
-                );
+                        userDetails.getAuthorities());
 
         SecurityContextHolder
                 .getContext()
