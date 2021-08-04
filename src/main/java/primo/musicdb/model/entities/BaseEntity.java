@@ -1,4 +1,4 @@
-package primo.musicdb.models.entities;
+package primo.musicdb.model.entities;
 
 import javax.persistence.*;
 

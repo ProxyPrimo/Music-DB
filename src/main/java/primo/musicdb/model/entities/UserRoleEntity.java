@@ -1,6 +1,6 @@
-package primo.musicdb.models.entities;
+package primo.musicdb.model.entities;
 
-import primo.musicdb.models.entities.enums.UserRoles;
+import primo.musicdb.model.entities.enums.UserRoles;
 
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
