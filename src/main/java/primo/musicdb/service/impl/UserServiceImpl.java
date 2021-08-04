@@ -1,5 +1,10 @@
 package primo.musicdb.service.impl;
 
+import org.modelmapper.ModelMapper;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import primo.musicdb.model.entities.UserEntity;
@@ -19,11 +24,15 @@ public class UserServiceImpl implements UserService {
     private final UserRoleService userRoleService;
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
+    private final ModelMapper modelMapper;
+    private final MusicDBUserService musicDBUserService;
 
-    public UserServiceImpl(UserRoleService userRoleService, UserRepository userRepository, PasswordEncoder passwordEncoder) {
+    public UserServiceImpl(UserRoleService userRoleService, UserRepository userRepository, PasswordEncoder passwordEncoder, ModelMapper modelMapper, MusicDBUserService musicDBUserService) {
         this.userRoleService = userRoleService;
         this.userRepository = userRepository;
         this.passwordEncoder = passwordEncoder;
+        this.modelMapper = modelMapper;
+        this.musicDBUserService = musicDBUserService;
     }
 
     @Override
@@ -49,7 +58,27 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public void registerAndLoginUser(UserRegistrationServiceModel serviceModel) {
-        // TODO coming soon!
-        throw new UnsupportedOperationException("NOT YET!");
+        UserEntity userEntity = modelMapper.map(serviceModel, UserEntity.class);
+
+        UserRoleEntity userRoleEntity =
+                userRoleService
+                .findByRole(UserRole.USER);
+
+        userEntity.addRole(userRoleEntity);
+
+        userRepository.saveAndFlush(userEntity);
+
+        UserDetails userDetails = musicDBUserService
+                .loadUserByUsername(userEntity.getName());
+
+        Authentication authentication =
+                new UsernamePasswordAuthenticationToken(
+                        userDetails, userEntity.getPassword(),
+                        userDetails.getAuthorities()
+                );
+
+        SecurityContextHolder
+                .getContext()
+                .setAuthentication(authentication);
     }
 }
