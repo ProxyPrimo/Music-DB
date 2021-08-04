@@ -39,7 +39,7 @@ public class MusicDBUserService implements UserDetailsService {
                 user
                         .getRoles()
                         .stream()
-                        .map(r -> new SimpleGrantedAuthority(r.getRole().name()))
+                        .map(r -> new SimpleGrantedAuthority("ROLE_" + r.getRole().name()))
                         .collect(Collectors.toList());
 
         return new User(

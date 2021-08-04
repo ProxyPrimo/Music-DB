@@ -23,7 +23,7 @@ public class UserController {
         return "register";
     }
 
-    @PostMapping("/users/login-error")
+    @PostMapping("/login-error")
     public ModelAndView failedLogin(
             @ModelAttribute(UsernamePasswordAuthenticationFilter.SPRING_SECURITY_FORM_USERNAME_KEY)
                     String username
