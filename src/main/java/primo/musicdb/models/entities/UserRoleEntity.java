@@ -3,6 +3,7 @@ package primo.musicdb.models.entities;
 import primo.musicdb.models.entities.enums.UserRoles;
 
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.Table;
 
@@ -11,7 +12,7 @@ import javax.persistence.Table;
 public class UserRoleEntity extends BaseEntity {
     private UserRoles role;
 
-    @Enumerated
+    @Enumerated(EnumType.STRING)
     public UserRoles getRole() {
         return role;
     }

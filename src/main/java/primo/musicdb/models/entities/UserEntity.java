@@ -9,7 +9,6 @@ import java.util.List;
 public class UserEntity extends BaseEntity {
     private String name;
     private String password;
-    private String fullName;
     private List<UserRoleEntity> roles = new ArrayList<>();
 
 
@@ -29,15 +28,6 @@ public class UserEntity extends BaseEntity {
 
     public void setPassword(String password) {
         this.password = password;
-    }
-
-    @Column(nullable = false)
-    public String getFullName() {
-        return fullName;
-    }
-
-    public void setFullName(String fullName) {
-        this.fullName = fullName;
     }
 
     @ManyToMany(fetch = FetchType.EAGER)
