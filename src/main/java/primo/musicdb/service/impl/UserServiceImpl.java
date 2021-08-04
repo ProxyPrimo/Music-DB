@@ -5,6 +5,7 @@ import org.springframework.stereotype.Service;
 import primo.musicdb.model.entities.UserEntity;
 import primo.musicdb.model.entities.UserRoleEntity;
 import primo.musicdb.model.entities.enums.UserRole;
+import primo.musicdb.model.service.UserRegistrationServiceModel;
 import primo.musicdb.repository.UserRepository;
 import primo.musicdb.service.UserRoleService;
 import primo.musicdb.service.UserService;
@@ -44,5 +45,11 @@ public class UserServiceImpl implements UserService {
 
             userRepository.saveAll(List.of(admin, user));
         }
+    }
+
+    @Override
+    public void registerAndLoginUser(UserRegistrationServiceModel serviceModel) {
+        // TODO coming soon!
+        throw new UnsupportedOperationException("NOT YET!");
     }
 }
