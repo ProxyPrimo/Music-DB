@@ -1,6 +1,5 @@
 package primo.musicdb.service.impl;
 
-import org.springframework.boot.autoconfigure.security.SecurityProperties;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.User;
@@ -26,7 +25,7 @@ public class MusicDBUserService implements UserDetailsService {
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         UserEntity user = userRepository
-                .findByName(username)
+                .findByUsername(username)
                 .orElseThrow(
                         () -> new UsernameNotFoundException("Invalid username")
                 );
@@ -43,7 +42,7 @@ public class MusicDBUserService implements UserDetailsService {
                         .collect(Collectors.toList());
 
         return new User(
-                user.getName(),
+                user.getUsername(),
                 user.getPassword(),
                 authorities
         );

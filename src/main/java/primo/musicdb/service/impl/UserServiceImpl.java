@@ -39,12 +39,18 @@ public class UserServiceImpl implements UserService {
     public void seedUsers() {
         if (userRepository.count() == 0) {
             UserEntity admin = new UserEntity();
-            admin.setName("admin");
-            admin.setPassword(passwordEncoder.encode("admin123"));
+            admin
+                    .setUsername("admin")
+                    .setFullName("Admin Admin")
+                    .setEmail("admin@admin.com")
+                    .setPassword(passwordEncoder.encode("admin123"));
 
             UserEntity user = new UserEntity();
-            user.setName("user");
-            user.setPassword(passwordEncoder.encode("user123"));
+            user
+                    .setUsername("user")
+                    .setFullName("User User")
+                    .setEmail("user@user.com")
+                    .setPassword(passwordEncoder.encode("user123"));
 
             UserRoleEntity userRole = userRoleService.findByRole(UserRole.USER);
             UserRoleEntity adminRole = userRoleService.findByRole(UserRole.ADMIN);
@@ -62,14 +68,15 @@ public class UserServiceImpl implements UserService {
 
         UserRoleEntity userRoleEntity =
                 userRoleService
-                .findByRole(UserRole.USER);
+                        .findByRole(UserRole.USER);
 
         userEntity.addRole(userRoleEntity);
+        userEntity.setPassword(passwordEncoder.encode(userEntity.getPassword()));
 
         userRepository.saveAndFlush(userEntity);
 
         UserDetails userDetails = musicDBUserService
-                .loadUserByUsername(userEntity.getName());
+                .loadUserByUsername(userEntity.getUsername());
 
         Authentication authentication =
                 new UsernamePasswordAuthenticationToken(
