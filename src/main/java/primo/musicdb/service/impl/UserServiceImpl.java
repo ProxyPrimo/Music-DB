@@ -86,4 +86,14 @@ public class UserServiceImpl implements UserService {
                 .getContext()
                 .setAuthentication(authentication);
     }
+
+    @Override
+    public boolean userNameExists(String username) {
+        return userRepository.findByUsername(username).isPresent();
+    }
+
+    @Override
+    public boolean emailExists(String email) {
+        return userRepository.findByEmail(email).isPresent();
+    }
 }

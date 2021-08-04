@@ -32,8 +32,9 @@
                                class="invalid-feedback text-light form-text bg-danger rounded">Username length must be
                             more than 3 characters</small>
                         <!--TODO user already exists-->
-                        <!--                        <small id="usernameUniqueError"-->
-                        <!--                               class="text-light form-text bg-danger rounded">Username is already occupied</small>-->
+                        <small id="usernameUniqueError"
+                               th:if="${userExistsError}"
+                               class="text-light form-text bg-danger rounded">Username is already occupied</small>
 
                     </div>
                 </div>
@@ -49,6 +50,7 @@
                                id="inputFullName"
                                class="form-control"
                                aria-describedby="fullNameHelpInline">
+
                         <small id="fullNameError"
                                class="invalid-feedback text-light form-text bg-danger rounded">Full name length must be
                             more than 3 characters</small>
@@ -69,6 +71,10 @@
                         <small id="emailError"
                                class="invalid-feedback text-light form-text bg-danger rounded">Must be valid
                             email</small>
+
+                        <small id="emailUniqueError"
+                               th:if="${emailExistsError}"
+                               class="text-light form-text bg-danger rounded">Email is already occupied</small>
                     </div>
                 </div>
 
